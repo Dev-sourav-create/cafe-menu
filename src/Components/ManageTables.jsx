@@ -31,9 +31,9 @@ const ManageTables = () => {
         // Generate QR codes for each table
         const newQrLinks = {};
         for (let table of tableArray) {
-          const link = `http://localhost:5173/order?table=${encodeURIComponent(
-            table.name
-          )}`;
+          const link = `${
+            import.meta.env.VITE_BASE_URL
+          }/order?table=${encodeURIComponent(table.name)}`;
           const qrDataURL = await QRCode.toDataURL(link); // generate image URL
           newQrLinks[table.id] = qrDataURL;
           console.log(link);
@@ -57,9 +57,9 @@ const ManageTables = () => {
     try {
       await setDoc(doc(db, "tables", newTable.id.toString()), newTable);
       setTables([...tables, newTable]);
-      const link = `http://localhost:5173/order?table=${encodeURIComponent(
-        newTable.name
-      )}`;
+      const link = `${
+        import.meta.env.VITE_BASE_URL
+      }/order?table=${encodeURIComponent(newTable.name)}`;
       const qrDataURL = await QRCode.toDataURL(link);
       setQrLinks((prev) => ({ ...prev, [newTable.id]: qrDataURL }));
       toast.success(`${newTable.name} added`);
@@ -85,19 +85,6 @@ const ManageTables = () => {
       console.log(error);
     }
   };
-  {
-    tables.map((table) => (
-      <div
-        key={table.id}
-        className="border border-gray-400 flex flex-col items-center justify-center m-2 h-44 rounded-lg"
-      >
-        <p>{table.name}</p>
-        {qrLinks[table.id] && (
-          <img src={qrLinks[table.id]} alt="QR Code" width={100} />
-        )}
-      </div>
-    ));
-  }
   return (
     <div className="">
       <button
