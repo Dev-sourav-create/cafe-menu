@@ -72,7 +72,7 @@ const Order = () => {
             <div
               key={idx}
               onClick={() =>
-                navigate(`/Order/Categories/${cat.name}?table=${tableName}`)
+                navigate(`/order/Categories/${cat.name}?table=${tableName}`)
               }
               className="flex flex-col items-center p-2 border border-gray-300 rounded-lg shadow-sm  transition"
             >

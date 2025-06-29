@@ -17,8 +17,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/Order" element={<Home />} />
-        <Route path="/Order/Categories" element={<Order />} />
+        <Route path="/order" element={<Home />} />
+        <Route path="/order/Categories" element={<Order />} />
         <Route
           path="/Admin"
           element={
@@ -28,7 +28,7 @@ function App() {
           }
         />
         <Route
-          path="/Order/Categories/:categoryName"
+          path="/order/Categories/:categoryName"
           element={<CategoryPage />}
         />
       </Routes>
