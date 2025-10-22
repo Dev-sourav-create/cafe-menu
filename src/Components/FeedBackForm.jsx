@@ -1,6 +1,6 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { db } from "@/firebase";
+import { db } from "@/firbase";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { StarRating } from "./StarRating";
 import toast from "react-hot-toast";
