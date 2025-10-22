@@ -9,6 +9,7 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import { Button } from "./ui/button";
 
 const ManageMenu = () => {
   const [categories, setCategories] = useState([]);
@@ -147,19 +148,19 @@ const ManageMenu = () => {
   };
 
   return (
-    <div className=" relative">
+    <div className="relative">
       {/* Top: Add category input */}
 
       {/* Horizontal scroll category list */}
-      <div className="overflow-x-auto whitespace-nowrap no-scrollbar py-2">
-        <div className="flex space-x-3 items-center py-2 mx-3">
+      <div className="overflow-x-auto overflow-y-hidden whitespace-nowrap no-scrollbar py-2">
+        <div className="flex space-x-6 items-center py-8 mx-2">
           {categories.map((cat) => {
             const isselected = selectedCategoryId === cat.id;
             return (
               <div
                 key={cat.id}
                 onClick={() => handleCategoryClick(cat.id)}
-                className={`relative inline-flex flex-col items-center min-w-[85px] m-1.5 rounded-lg transition
+                className={`relative inline-flex flex-col items-center min-w-[85px] m-1.5 p-1 rounded-lg transition
   ${
     isselected
       ? "border-orange-300 border-2 shadow-md"
@@ -207,7 +208,7 @@ const ManageMenu = () => {
         <div className=" flex justify-end px-2">
           <button
             onClick={() => setShowItemModal(true)}
-            className="border-1  border-orange-500 text-orange-500 px-3 py-2 rounded"
+            className="border-1  border-orange-500 text-orange-500 px-3 py-2 rounded-lg"
           >
             + Add Item
           </button>
@@ -260,68 +261,70 @@ const ManageMenu = () => {
       )}
 
       {/* Items List */}
-      <div className="space-y-4 px-4 pt-4 w-full max-w-sm mx-auto overflow-hidden">
-        {selectedCategoryItems.map((item, index) => {
-          const isLong = item.description?.length > 60;
-          const isExpanded = expandedIndex === index;
+      <div className="flex justify-start lg:justify-center w-full my-6 px-4 pt-4">
+        <div className="space-y-6 w-full max-w-sm sm:max-w-md lg:max-w-2xl overflow-hidden">
+          {selectedCategoryItems.map((item, index) => {
+            const isLong = item.description?.length > 60;
+            const isExpanded = expandedIndex === index;
+            const shortDesc = item.description?.slice(0, 60) + "...";
 
-          const shortDesc = item.description?.slice(0, 60) + "...";
+            return (
+              <div
+                key={index}
+                className="flex gap-3 border-b border-dashed border-gray-400 pb-3"
+              >
+                {/* Left: Image */}
+                <img
+                  src={item.image || "https://via.placeholder.com/80"}
+                  alt={item.name}
+                  className="w-16 h-16 rounded object-cover flex-shrink-0"
+                />
 
-          return (
-            <div
-              key={index}
-              className="flex gap-3 border-b border-dashed border-gray-400 pb-3"
-            >
-              {/* Left: Image */}
-              <img
-                src={item.image || "https://via.placeholder.com/80"}
-                alt={item.name}
-                className="w-16 h-16 rounded object-cover flex-shrink-0"
-              />
+                {/* Right: Info */}
+                <div className="flex justify-between w-full overflow-hidden">
+                  <div className="flex justify-between flex-col items-start">
+                    <h4 className="font-semibold text-sm text-ellipsis whitespace-nowrap overflow-hidden">
+                      {item.name}
+                    </h4>
 
-              {/* Right: Info */}
-              <div className="flex  justify-between w-full overflow-hidden">
-                {/* Top Row */}
-                <div className="flex justify-between flex-col items-start">
-                  <h4 className="font-semibold text-sm text-ellipsis whitespace-nowrap overflow-hidden">
-                    {item.name}
-                  </h4>
-                  {/* Description */}
-                  <div className="text-xs text-gray-500 mt-1 max-w-[200px]">
-                    <div
-                      className={`leading-snug text-left break-words max-w-[350px] ${
-                        !isExpanded && isLong ? "truncate" : ""
-                      }`}
-                    >
-                      {isExpanded || !isLong ? item.description : shortDesc}
-                      {isLong && (
-                        <div>
-                          <button
-                            onClick={() =>
-                              setExpandedIndex(isExpanded ? null : index)
-                            }
-                            className="text-orange-500  hover:underline text-xs "
-                          >
-                            {isExpanded ? "Show less" : "Read more"}
-                          </button>
-                        </div>
-                      )}
+                    {/* Description */}
+                    <div className="text-xs text-gray-500 mt-1 max-w-[200px]">
+                      <div
+                        className={`leading-snug text-left break-words max-w-[350px] ${
+                          !isExpanded && isLong ? "truncate" : ""
+                        }`}
+                      >
+                        {isExpanded || !isLong ? item.description : shortDesc}
+                        {isLong && (
+                          <div>
+                            <button
+                              onClick={() =>
+                                setExpandedIndex(isExpanded ? null : index)
+                              }
+                              className="text-orange-500 hover:underline text-xs"
+                            >
+                              {isExpanded ? "Show less" : "Read more"}
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-gray-800">₹{item.price}</p>
-                  <button
-                    onClick={() => handleDeleteItem(index)}
-                    className="text-xs text-red-500 hover:underline"
-                  >
-                    Remove
-                  </button>
+
+                  <div className="text-right">
+                    <p className="text-sm text-gray-800">₹{item.price}</p>
+                    <button
+                      onClick={() => handleDeleteItem(index)}
+                      className="text-xs text-red-500 hover:underline"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* Modal */}

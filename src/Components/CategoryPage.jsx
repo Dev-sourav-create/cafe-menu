@@ -77,8 +77,8 @@ const CategoryPage = () => {
       {/* Header */}
       <header className="flex items-center justify-between px-4 py-3 bg-white shadow">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="Cafe Ravli" className="h-8 w-8" />
-          <h1 className="font-semibold text-lg">Cafe Ravli</h1>
+          <img src="/Coffee.png" alt="/Bistro" className="h-12 w-12" />
+          <h1 className="font-semibold pt-2 text-lg">Bistro</h1>
         </div>
       </header>
       <p className="font-medium text-left border-b border-gray-300 pt-3 pb-2 mx-3 text-gray-600 mt-4 mb-4">

@@ -7,17 +7,23 @@ import CategoryPage from "./Components/CategoryPage";
 import { Toaster } from "react-hot-toast";
 import Login from "./Components/Login";
 import ProtectedRoute from "./Routes/ProtectedRoute";
-import LandingPage from "./Components/LandingPage";
+import LandingPage from "./Pages/LandingPage";
 import Signup from "./Components/Signup";
+import FeedBackForm from "./Components/FeedBackForm";
+import ManageOrders from "./Components/ManageOrders";
+import ManageTables from "./Components/ManageTables";
+import ManageMenu from "./Components/ManageMenu.";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<LandingPage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/order" element={<Home />} />
+        <Route path="/feedback" element={<FeedBackForm />} />
         <Route path="/order/Categories" element={<Order />} />
         <Route
           path="/Admin"

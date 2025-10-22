@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firbase";
-import QRCode from "qrcode"; // ✅ Import qrcode (not react-qrcode)
+import QRCode from "qrcode";
 import toast from "react-hot-toast";
 import {
   doc,
@@ -12,11 +12,10 @@ import {
 
 const ManageTables = () => {
   const [tables, setTables] = useState([]);
-  const [qrLinks, setQrLinks] = useState({}); // { tableId: QRDataURL }
+  const [qrLinks, setQrLinks] = useState({});
+  const [selectedQR, setSelectedQR] = useState(null); // For popup modal
+  const [selectedTable, setSelectedTable] = useState(null); // For popup title
 
-  const [expandedId, setExpandedId] = useState(null);
-
-  // Fetch tables and generate QR links
   useEffect(() => {
     const getTables = async () => {
       try {
@@ -28,29 +27,27 @@ const ManageTables = () => {
         }));
         setTables(tableArray);
 
-        // Generate QR codes for each table
         const newQrLinks = {};
         for (let table of tableArray) {
           const link = `${
             import.meta.env.VITE_BASE_URL
           }/order?table=${encodeURIComponent(table.name)}`;
-          const qrDataURL = await QRCode.toDataURL(link); // generate image URL
+          const qrDataURL = await QRCode.toDataURL(link);
           newQrLinks[table.id] = qrDataURL;
-          console.log(link);
         }
         setQrLinks(newQrLinks);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
+
     getTables();
   }, []);
 
-  // add new table
   const addNewTable = async () => {
     const newTable = {
       id: tables.length + 1,
-      name: `table${tables.length + 1}`,
+      name: `Table${tables.length + 1}`,
       order: [],
     };
 
@@ -63,13 +60,11 @@ const ManageTables = () => {
       const qrDataURL = await QRCode.toDataURL(link);
       setQrLinks((prev) => ({ ...prev, [newTable.id]: qrDataURL }));
       toast.success(`${newTable.name} added`);
-      console.log(link);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
-  // delete a table
   const deleteTable = async () => {
     if (tables.length === 0) return;
 
@@ -82,51 +77,90 @@ const ManageTables = () => {
       setQrLinks(updatedLinks);
       toast.success(`${lastTable.name} deleted`);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
+
+  const handleTableClick = (table) => {
+    setSelectedTable(table.name);
+    setSelectedQR(qrLinks[table.id]);
+  };
+
+  const closeModal = () => {
+    setSelectedQR(null);
+    setSelectedTable(null);
+  };
+
+  const downloadQR = () => {
+    const link = document.createElement("a");
+    link.href = selectedQR;
+    link.download = `${selectedTable}_QR.png`;
+    link.click();
+  };
+
   return (
-    <div className="">
-      <button
-        onClick={addNewTable}
-        className=" text-orange-500 border-1 border-orange-500 px-6 py-2 mt-4 m-2 rounded-lg"
-      >
-        + Add
-      </button>
-      <button
-        onClick={deleteTable}
-        className="bg-white text-gray-500  border-gray-400 border-1 px-6 py-2 mt-4 m-2 rounded-lg"
-      >
-        Delete
-      </button>
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-8">
-        {tables.map((item) => {
-          const isExpanded = expandedId === item.id;
-
-          return (
-            <div
-              key={item.id}
-              onClick={() => setExpandedId(isExpanded ? null : item.id)}
-              className={`relative border border-gray-500 rounded-xl m-2  cursor-pointer transition-all duration-300 ease-in-out overflow-hidden ${
-                isExpanded ? "h-52 p-4" : "h-36 p-2"
-              }`}
-            >
-              <h3 className={`text-center text-gray-600 mt-2  transition-all `}>
-                {item.name}
-              </h3>
-
-              {isExpanded && (
-                <div className="mt-3 text-center flex justify-center text-gray-600 text-sm transition-opacity duration-300 opacity-100">
-                  {qrLinks[item.id] && (
-                    <img src={qrLinks[item.id]} alt="QR Code" width={200} />
-                  )}
-                </div>
-              )}
-            </div>
-          );
-        })}
+    <div className="mt-2">
+      <div className="flex justify-end lg:justify-start px-8">
+        <button
+          onClick={addNewTable}
+          className="text-orange-500 border border-orange-500 px-6 py-2 mt-4 m-2 rounded-lg"
+        >
+          + Add
+        </button>
+        <button
+          onClick={deleteTable}
+          className="bg-white text-gray-500 border border-gray-400 px-6 py-2 mt-4 m-2 rounded-lg"
+        >
+          Delete
+        </button>
       </div>
+
+      {/* Tables Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 p-8">
+        {tables.map((item) => (
+          <div
+            key={item.id}
+            onClick={() => handleTableClick(item)}
+            className="relative border flex items-center justify-center border-gray-400 rounded-xl m-2 cursor-pointer transition-all duration-300 ease-in-out overflow-hidden hover:shadow-md bg-white h-32"
+          >
+            <h3 className="text-gray-700 font-medium">{item.name}</h3>
+          </div>
+        ))}
+      </div>
+
+      {/* QR Popup Modal */}
+      {selectedQR && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full relative text-center"
+            onClick={(e) => e.stopPropagation()} // Prevent close on inside click
+          >
+            <button
+              onClick={closeModal}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+            >
+              ✕
+            </button>
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">
+              {selectedTable}
+            </h2>
+            <img
+              src={selectedQR}
+              alt="QR Code"
+              className="mx-auto w-48 h-48 border border-gray-200 rounded-lg"
+            />
+            <button
+              onClick={downloadQR}
+              className="mt-4 px-5 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600"
+            >
+              Download QR
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
