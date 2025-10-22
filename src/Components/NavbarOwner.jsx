@@ -4,7 +4,7 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
-} from "@/components/ui/navigation-menu";
+} from "@/components/ui/Navigation-menu";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useEffect, useState, useRef } from "react";

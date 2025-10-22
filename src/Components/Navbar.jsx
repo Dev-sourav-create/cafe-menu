@@ -4,7 +4,7 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
-} from "@/components/ui/navigation-menu";
+} from "@/components/ui/Navigation-menu";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useEffect, useState, useRef } from "react";
@@ -50,7 +50,7 @@ const Navbar = () => {
 
   return (
     <nav className="relative z-50 mx-auto mt-12 flex w-full max-w-7xl items-center justify-between px-6 py-4 font-inter text-sm">
-      <div className="flex cursor-pointer items-center gap-2">
+      <div className="flex cursor-pointer items-center gap-2 hover:scale-105 transform transition-transform duration-300 ease-in-out">
         <img className="w-12 h-12" src="/Coffee.png" alt="logo" />
         <p className="text-xl font-semibold">Bistro</p>
       </div>
