@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "./ui/Button";
+import { Button } from "@/Components/ui/Button";
 import Testimonials from "./Testimonials";
 
 const Hero = () => {

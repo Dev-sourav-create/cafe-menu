@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../firbase";
 import OrderListCard from "./OrderListCard";
-import toast from "react-hot-toast";
 
 const ManageOrders = () => {
   const [orders, setOrders] = useState([]);

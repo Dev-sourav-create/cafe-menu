@@ -6,7 +6,7 @@ import {
   NavigationMenuLink,
 } from "@/Components/ui/Navigation-menu";
 import { useNavigate } from "react-router-dom";
-import { Button } from "./ui/Button";
+import { Button } from "@/Components/ui/Button";
 import { useEffect, useState, useRef } from "react";
 import { Menu, X } from "lucide-react";
 

@@ -1,16 +1,16 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Input } from "./ui/Input";
 import { db } from "@/firbase";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { StarRating } from "./StarRating";
+import toast from "react-hot-toast";
+import { Input } from "@/Components/ui/Input";
 import {
   InputGroupTextarea,
   InputGroup,
   InputGroupAddon,
-} from "./ui/input-group";
-import { Button } from "./ui/Button";
-import { StarRating } from "./StarRating";
-import toast from "react-hot-toast";
+} from "@/Components/ui/Input-group";
+import { Button } from "@/Components/ui/Button";
 
 const FeedBackForm = () => {
   const { register, handleSubmit, control, reset } = useForm({
