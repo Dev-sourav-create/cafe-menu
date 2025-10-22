@@ -9,7 +9,6 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { Button } from "./ui/button";
 
 const ManageMenu = () => {
   const [categories, setCategories] = useState([]);

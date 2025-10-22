@@ -8,7 +8,7 @@ import {
   InputGroup,
   InputGroupAddon,
 } from "./ui/input-group";
-import { Button } from "./ui/button";
+import { Button } from "./ui/Button";
 import { StarRating } from "./StarRating";
 import toast from "react-hot-toast";
 
