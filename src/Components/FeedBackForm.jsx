@@ -1,6 +1,6 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Input } from "./ui/input";
+import { Input } from "./ui/Input";
 import { db } from "@/firbase";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import {

@@ -10,9 +10,6 @@ import ProtectedRoute from "./Routes/ProtectedRoute";
 import LandingPage from "./Pages/LandingPage";
 import Signup from "./Components/Signup";
 import FeedBackForm from "./Components/FeedBackForm";
-import ManageOrders from "./Components/ManageOrders";
-import ManageTables from "./Components/ManageTables";
-import ManageMenu from "./Components/ManageMenu.";
 
 function App() {
   return (
