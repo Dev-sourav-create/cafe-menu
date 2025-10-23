@@ -4,10 +4,9 @@ import { useCartLogic } from "../CustomHooks/useCartLogic";
 function Home() {
   const navigate = useNavigate();
   const location = useLocation();
-  const tableName = new URLSearchParams(location.search).get("table");
+  const tableName = new URLSearchParams(location.search).get("Table");
   console.log(tableName);
   const { clearCart } = useCartLogic(tableName);
-  console.log(tableName);
 
   return (
     <div className="h-screen bg-white flex flex-col">

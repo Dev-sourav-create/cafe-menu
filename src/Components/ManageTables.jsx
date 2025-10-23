@@ -43,6 +43,7 @@ const ManageTables = () => {
 
     getTables();
   }, []);
+  console.log(qrLinks);
 
   const addNewTable = async () => {
     const newTable = {
