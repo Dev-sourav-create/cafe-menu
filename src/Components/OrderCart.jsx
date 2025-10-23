@@ -13,7 +13,7 @@ import { db } from "../firbase";
 
 const OrderCart = () => {
   const location = useLocation();
-  const tableName = new URLSearchParams(location.search).get("Table");
+  const tableName = new URLSearchParams(location.search).get("table");
   console.log(tableName);
 
   const { Cart } = useCartLogic(tableName);
