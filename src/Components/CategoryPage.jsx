@@ -16,7 +16,7 @@ const CategoryPage = () => {
 
   const location = useLocation();
 
-  const tableName = new URLSearchParams(location.search).get("Table");
+  const tableName = new URLSearchParams(location.search).get("table");
 
   const { Cart, increaseQuantity, decreaseQuantity } = useCartLogic(tableName);
 
