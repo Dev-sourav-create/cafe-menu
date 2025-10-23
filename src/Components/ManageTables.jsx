@@ -43,7 +43,6 @@ const ManageTables = () => {
 
     getTables();
   }, []);
-  console.log(qrLinks);
 
   const addNewTable = async () => {
     const newTable = {
@@ -61,6 +60,7 @@ const ManageTables = () => {
       const qrDataURL = await QRCode.toDataURL(link);
       setQrLinks((prev) => ({ ...prev, [newTable.id]: qrDataURL }));
       toast.success(`${newTable.name} added`);
+      console.log(link);
     } catch (error) {
       console.error(error);
     }

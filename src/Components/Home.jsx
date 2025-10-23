@@ -4,7 +4,7 @@ import { useCartLogic } from "../CustomHooks/useCartLogic";
 function Home() {
   const navigate = useNavigate();
   const location = useLocation();
-  const tableName = new URLSearchParams(location.search).get("Table");
+  const tableName = new URLSearchParams(location.search).get("table");
   console.log(tableName);
   const { clearCart } = useCartLogic(tableName);
 
@@ -30,7 +30,7 @@ function Home() {
             }
 
             await clearCart(); // Clear only if tableName exists
-            navigate(`/order/Categories/?Table=${tableName}`);
+            navigate(`/order/Categories/?table=${tableName}`);
           }}
           className="bg-white mt-5 shadow-[0_0_4px_rgba(128,128,128,0.6)] rounded-lg h-14 py-2 px-6 flex items-center space-x-2"
         >
