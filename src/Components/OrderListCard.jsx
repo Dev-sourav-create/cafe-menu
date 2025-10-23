@@ -4,6 +4,8 @@ import { db } from "../firbase"; // Adjust the import path if necessary
 import toast from "react-hot-toast";
 
 const OrderListCard = ({ order }) => {
+  console.log(order);
+
   const handleCompleteOrder = async () => {
     try {
       const completedRef = doc(db, "completedOrders", order.id);
