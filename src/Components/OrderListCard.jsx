@@ -41,6 +41,7 @@ const OrderListCard = ({ order }) => {
           {order.items.map((item, idx) => (
             <span key={idx}>
               {item.name} × {item.qty}
+              <span className="font-semibold px-3">from {order.table}</span>
               {idx < order.items.length - 1 && " | "}
             </span>
           ))}
